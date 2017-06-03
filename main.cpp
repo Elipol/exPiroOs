@@ -3,6 +3,8 @@
 
 using namespace std;
 int main() {
+    cin.unsetf(ios::skipws);
+
     srand(time(NULL));
     char *word = new char[10];
     short key[10];
