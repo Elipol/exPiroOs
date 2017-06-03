@@ -4,26 +4,43 @@
 using namespace std;
 int main() {
     cin.unsetf(ios::skipws);
-
+    short key;
+    char dchar;
     srand(time(NULL));
-    char *word = new char[10];
-    short key[10];
 
-    for (int i = 0; i < 10; i++) {
-        key[i] = rand() % 128 - 127;
-        cin >> word[i];
-        word[i] = word[i] ^ key[i];
+    ofstream outData;
+    ofstream outKey;
+
+    outData.open("enData.txt");
+    outKey.open("Key.txt");
+
+    do
+    {
+        key = rand() % 128 - 127;
+        cin >> dchar;
+
+        outData.put(dchar^key);
+        outKey.put(key);
+
+    }while(dchar != '~');
+
+    outData.close();
+    outKey.close();
+
+    ifstream inData;
+    ifstream inKey;
+
+    inData.open("enData.txt");
+    inKey.open("Key.txt");
+
+   // cout << inData.rdbuf();
+
+    char chd, chk;
+    while (inData.get(chd))
+    {
+        inKey.get(chk);
+        chd = chd ^ chk;
+        cout << chd;
     }
-
-    for (int i = 0; i < 10; i++)
-        cout << word[i];
-    cout << endl;
-
-    for (int i = 0; i < 10; i++) {
-        word[i] = word[i] ^ key[i];
-        cout << word[i];
-    }
-    cout << endl;
-
     return 0;
 }
